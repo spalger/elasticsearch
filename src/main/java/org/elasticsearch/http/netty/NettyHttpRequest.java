@@ -60,6 +60,11 @@ public class NettyHttpRequest extends HttpRequest {
             this.rawPath = uri.substring(0, pathEndPos);
             RestUtils.decodeQueryString(uri, pathEndPos + 1, params);
         }
+
+        String methodOverride = params.get("_method_override");
+        if (methodOverride != null) {
+            request.setMethod(HttpMethod.valueOf(methodOverride));
+        }
     }
 
     public org.jboss.netty.handler.codec.http.HttpRequest request() {
